@@ -28,7 +28,11 @@ namespace ibon_poc.Controllers
             var env = _config["test"];
             var secret = _config["key"];
 
-            return "config: " + (env ?? " read fail") + " secret: " + (secret ?? " read fail");
+            var msg = "config: " + (env ?? " read fail") + " secret: " + (secret ?? " read fail");
+
+            _logger.LogInformation(msg);
+
+            return msg;
         }
     }
 }
