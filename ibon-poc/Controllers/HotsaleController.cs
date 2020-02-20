@@ -23,6 +23,7 @@ namespace ibon_poc.Controllers
         }
 
         [HttpGet]
+        [Route("get")]
         public async Task<string> Get(int id)
         {
             var config = _config["test"];

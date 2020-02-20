@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: ibon-poc
+  name: ibon-poc
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ibon-poc
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: ibon-poc
+    spec:
+      containers:
+      - image: testcrr.azurecr.io/ibon-poc:v1
+        name: ibon-poc
+        env:
+        - name: nodeName
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: podName
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        volumeMounts:
+        - name: config
+          mountPath: /ibon-poc/appsettings.json
+          subPath: appsettings.json
+        - name: secret
+          mountPath: /ibon-poc/secret.json
+          subPath: secret.json
+      volumes:
+      - name: config
+        configMap:
+          name: ibon-poc-configmap
+      - name: secret
+        secret:
+          secretName: ibon-poc-secret
