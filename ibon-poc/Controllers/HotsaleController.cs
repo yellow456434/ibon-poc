@@ -25,14 +25,18 @@ namespace ibon_poc.Controllers
         [HttpGet]
         public async Task<string> Get(int id)
         {
-            var env = _config["test"];
+            var config = _config["test"];
             var secret = _config["key"];
+            var env_nodeName = Environment.GetEnvironmentVariable("nodeName");
+            var env_podName = Environment.GetEnvironmentVariable("podName");
 
-            var msg = "config: " + (env ?? " read fail") + " secret: " + (secret ?? " read fail");
+            var msg = "config: " + (config ?? " read fail") + " secret: " + (secret ?? " read fail");
+            var msg2 = "env_nodeName: " + (env_nodeName ?? " read fail") + " env_podName: " + (env_podName ?? " read fail");
 
             _logger.LogInformation(msg);
+            _logger.LogInformation(msg2);
 
-            return msg;
+            return msg+" "+msg2;
         }
     }
 }
