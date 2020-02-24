@@ -16,7 +16,7 @@ spec:
         app: ibon-poc
     spec:
       containers:
-      - image: testcrr.azurecr.io/ibon-poc:v1
+      - image: testcrr.azurecr.io/ibon-poc:v3
         name: ibon-poc
         env:
         - name: nodeName
