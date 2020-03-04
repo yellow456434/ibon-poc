@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Google.Protobuf.WellKnownTypes;
+using Grpc.Net.Client;
+using GrpcGreeter;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -38,6 +41,28 @@ namespace ibon_poc.Controllers
             _logger.LogInformation(msg2);
 
             return msg+" "+msg2;
+        }
+
+        [HttpGet]
+        [Route("grpc")]
+        public async Task<string> Grpc(string t)
+        {
+            var grpcUrl = Environment.GetEnvironmentVariable("grpcUrl");
+            AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+
+            var channel = GrpcChannel.ForAddress("http://" + grpcUrl + ":5001");
+            var client = new Greeter.GreeterClient(channel);            
+
+            var creply = await client.SayCheersAsync(new CheersRequest
+            {
+                Bol = true,
+                Name = t,
+                Stringlt = { new List<string> { "A", "B", "C", "D", "E" } },
+                Numberlt = { new List<int>() { 1, 2, 3, 4, 5 } },
+                Birthday = Timestamp.FromDateTime(DateTime.Now.ToUniversalTime()),
+            });
+
+            return creply.Message;
         }
     }
 }

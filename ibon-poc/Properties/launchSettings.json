@@ -3,7 +3,9 @@
   "profiles": {
     "ibon_poc": {
       "commandName": "Project",
+      "launchBrowser": false,
       "environmentVariables": {
+        "grpcUrl": "localhost",
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "http://localhost:5000"

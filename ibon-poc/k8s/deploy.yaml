@@ -1,23 +1,39 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ibonpoc
+  labels:
+    account: ibonpoc
+    
+---
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: ibon-poc
-  name: ibon-poc
+    app: ibonpoc
+    version: v1
+  name: ibonpoc-v1
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: ibon-poc
+      app: ibonpoc
+      version: v1
   strategy: {}
   template:
     metadata:
       labels:
-        app: ibon-poc
+        app: ibonpoc
+        version: v1
     spec:
+      serviceAccountName: ibonpoc
       containers:
-      - image: testcrr.azurecr.io/ibon-poc:v3
-        name: ibon-poc
+      - image: testcrr.azurecr.io/ibon-poc:v1.0
+        name: ibonpoc
+        ports:
+          - containerPort: 80
+            name: http
         env:
         - name: nodeName
           valueFrom:
@@ -27,6 +43,8 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
+        - name: grpcUrl
+          value: grpc
         volumeMounts:
         - name: config
           mountPath: /ibon-poc/appsettings.json

@@ -1,0 +1,28 @@
+apiVersion: install.istio.io/v1alpha2
+kind: IstioControlPlane
+spec:
+  profile: default
+  values:
+    global:
+      tracer:
+        zipkin:
+          address: "jaeger-collector.istio-system:9411"
+      defaultNodeSelector:
+        beta.kubernetes.io/os: linux
+      controlPlaneSecurityEnabled: false
+      mtls:
+        enabled: false
+    grafana:
+      enabled: false
+      security:
+        enabled: false
+    prometheus:
+      enabled: true
+    kiali:
+      enabled: true
+    tracing:
+      enabled: true
+      ingress:
+        enabled: true
+    pilot:
+      traceSampling: 100

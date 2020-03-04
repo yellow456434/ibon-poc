@@ -2,14 +2,15 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: ibon-poc-service
-  name: ibon-poc-service
+    app: ibonpoc
+    service: ibonpoc
+  name: ibonpoc
 spec:
   ports:
-  - name: 80-80
-    port: 80
+  - name: http
+    port: 801
     protocol: TCP
     targetPort: 80
   selector:
-    app: ibon-poc
+    app: ibonpoc
   type: ClusterIP
