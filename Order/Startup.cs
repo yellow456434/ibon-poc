@@ -1,14 +1,15 @@
 using System;
 using GreenPipes;
-using ibon_poc.Services;
 using MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Order.QueueConsumer;
+using Order.Services;
 
-namespace ibon_poc
+namespace Order
 {
     public class Startup
     {
@@ -18,16 +19,13 @@ namespace ibon_poc
         }
 
         public IConfiguration Configuration { get; }
+        private readonly IBusControl _busControl;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddDbContextPool<BookDbContext>(opts => opts.UseSqlServer(Configuration.GetConnectionString("Book")));
-
-            //services.ConfigureRepositories();
-
             services.AddMassTransit(x =>
-            {               
+            {
                 x.AddBus(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
                 {
                     cfg.Host("rabbitmq://" + Environment.GetEnvironmentVariable("rabbitmqHost") + ":" + Configuration["rabbitmqPort"],
@@ -35,7 +33,17 @@ namespace ibon_poc
                             host.Username("admin");
                             host.Password("pw12345");
                         });
+
+                    cfg.ReceiveEndpoint("queueTest", e =>
+                    {
+                        e.PrefetchCount = 1;
+                        e.UseMessageRetry(x => x.Interval(2, 100));
+
+                        e.ConfigureConsumer<OrderConsumer>(provider);
+                    });
                 }));
+
+                x.AddConsumer<OrderConsumer>();
             });
 
             services.AddSingleton<IHostedService, BusService>();
@@ -50,8 +58,6 @@ namespace ibon_poc
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            //app.UseHttpsRedirection();
 
             app.UseRouting();
 

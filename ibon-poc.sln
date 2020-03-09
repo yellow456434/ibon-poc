@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ibon-poc", "ibon-poc\ibon-p
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrpcGreeter", "GrpcGreeter\GrpcGreeter.csproj", "{703E5687-2991-4671-A6CE-C054718C9AB7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Order", "Order\Order.csproj", "{8754BD91-6C62-42D6-B72B-3CB188A454B8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,5 +21,9 @@ Global
 		{703E5687-2991-4671-A6CE-C054718C9AB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{703E5687-2991-4671-A6CE-C054718C9AB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{703E5687-2991-4671-A6CE-C054718C9AB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8754BD91-6C62-42D6-B72B-3CB188A454B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8754BD91-6C62-42D6-B72B-3CB188A454B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8754BD91-6C62-42D6-B72B-3CB188A454B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8754BD91-6C62-42D6-B72B-3CB188A454B8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

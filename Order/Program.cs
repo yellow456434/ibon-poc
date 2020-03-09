@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace ibon_poc
+namespace Order
 {
     public class Program
     {
@@ -18,17 +18,13 @@ namespace ibon_poc
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureAppConfiguration((hostingContext, config) =>
-                {
-                    config.AddJsonFile(
-                        "secret.json", optional: false, reloadOnChange: true);
-                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.ConfigureKestrel(Host =>
                     {
-                        Host.ListenAnyIP((args != null && args.Length > 0) ? Convert.ToInt16(args[0]) : 5000);
-                    }).UseStartup<Startup>();
+                        Host.ListenAnyIP((args != null && args.Length > 0) ? Convert.ToInt16(args[0]) : 5001);
+                    });
+                    webBuilder.UseStartup<Startup>();
                 });
     }
 }

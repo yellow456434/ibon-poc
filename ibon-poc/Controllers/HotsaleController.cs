@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Net.Client;
 using GrpcGreeter;
+using QueueContract;
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -17,12 +19,14 @@ namespace ibon_poc.Controllers
     {
         private readonly ILogger<HotSaleController> _logger;
         private readonly IConfiguration _config;
+        private readonly IPublishEndpoint _ipublish;
 
         public HotSaleController(ILogger<HotSaleController> logger,
-            IConfiguration config)
+            IConfiguration config, IPublishEndpoint ipublish)
         {
             _logger = logger;
             _config = config;
+            _ipublish = ipublish;
         }
 
         [HttpGet]
@@ -47,10 +51,10 @@ namespace ibon_poc.Controllers
         [Route("grpc")]
         public async Task<string> Grpc(string t)
         {
-            var grpcUrl = Environment.GetEnvironmentVariable("grpcUrl");
+            var grpcHost = Environment.GetEnvironmentVariable("grpcHost");
             AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
 
-            var channel = GrpcChannel.ForAddress("http://" + grpcUrl + ":5001");
+            var channel = GrpcChannel.ForAddress("http://" + grpcHost + ":" + _config["grpcPort"]);
             var client = new Greeter.GreeterClient(channel);            
 
             var creply = await client.SayCheersAsync(new CheersRequest
@@ -63,6 +67,18 @@ namespace ibon_poc.Controllers
             });
 
             return creply.Message;
+        }
+
+        [HttpGet]
+        [Route("publish")]
+        public async Task Publish(string t)
+        {
+            await _ipublish.Publish<OrderMsg>(new
+            {
+                id = new Random().Next(),
+                name = t,
+                DateTime = DateTime.Now
+            });
         }
     }
 }

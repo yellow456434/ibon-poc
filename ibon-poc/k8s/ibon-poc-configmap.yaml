@@ -9,7 +9,9 @@ data:
           "ibon_poc": "Debug"
         }
       },
-      "test": "abcd1234"
+      "test": "abcd1234",
+      "grpcPort": 5001,
+      "rabbitmqPort": 5672
     }
 kind: ConfigMap
 metadata:

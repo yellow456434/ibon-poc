@@ -12,5 +12,5 @@ spec:
       paths:
       - path: /(.*)
         backend:
-          serviceName: ibon-poc-service
-          servicePort: 80
+          serviceName: ibonpoc
+          servicePort: 801

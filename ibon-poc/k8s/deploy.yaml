@@ -29,7 +29,7 @@ spec:
     spec:
       serviceAccountName: ibonpoc
       containers:
-      - image: testcrr.azurecr.io/ibon-poc:v1.0
+      - image: yellow456434/ibonpoc:v1.1
         name: ibonpoc
         ports:
           - containerPort: 80
@@ -43,7 +43,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.name
-        - name: grpcUrl
+        - name: grpcHost
           value: grpc
         volumeMounts:
         - name: config

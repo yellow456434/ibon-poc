@@ -16,6 +16,8 @@
     <Folder Include="Models\DBModels\" />
     <Folder Include="Models\CtrModels\" />
     <Folder Include="Configurations\" />
+    <Folder Include="QueueContract\" />
+    <Folder Include="Services\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.2" />
@@ -23,5 +25,8 @@
     <PackageReference Include="Grpc.Tools" Version="2.27.0" PrivateAssets="All" />
     <PackageReference Include="Grpc.Net.Client" Version="2.27.0" />
     <PackageReference Include="Google.Protobuf" Version="3.11.4" />
+    <PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="6.2.1" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="6.2.1" />
+    <PackageReference Include="MassTransit.AspNetCore" Version="6.2.1" />
   </ItemGroup>
 </Project>
