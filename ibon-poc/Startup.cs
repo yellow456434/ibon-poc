@@ -32,9 +32,14 @@ namespace ibon_poc
                 {
                     cfg.Host("rabbitmq://" + Environment.GetEnvironmentVariable("rabbitmqHost") + ":" + Configuration["rabbitmqPort"],
                         host => {
-                            host.Username("admin");
-                            host.Password("pw12345");
+                            host.Username(Configuration["rabbitmq:username"]);
+                            host.Password(Configuration["rabbitmq:password"]);
                         });
+                    cfg.UseMessageRetry(c =>
+                    {
+                        c.Interval(2, TimeSpan.FromSeconds(3));
+
+                    });
                 }));
             });
 
