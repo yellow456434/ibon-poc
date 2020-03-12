@@ -14,15 +14,17 @@ spec:
   strategy: {}
   template:
     metadata:
+      annotations:
+        up: "2"
       labels:
         app: ibonpoc
         version: v1
     spec:
       containers:
-      - image: yellow456434/ibonpoc:v1.1
+      - image: yellow456434/ibonpoc:v1.6
         name: ibonpoc
         ports:
-          - containerPort: 80
+          - containerPort: 5000
             name: http
         env:
         - name: nodeName
@@ -35,17 +37,23 @@ spec:
               fieldPath: metadata.name
         - name: grpcHost
           value: grpc
+        - name: rabbitmqHost
+          value: rabbitmq-ha.rabbitmq.svc.cluster.local
         volumeMounts:
         - name: config
-          mountPath: /ibon-poc/appsettings.json
-          subPath: appsettings.json
+          mountPath: /ibon-poc/Configs/
         - name: secret
-          mountPath: /ibon-poc/secret.json
-          subPath: secret.json
+          mountPath: /ibon-poc/Secrets/
       volumes:
       - name: config
         configMap:
           name: ibon-poc-configmap
+          items:
+          -  key: appsettings.json
+             path: appsettings.json
       - name: secret
         secret:
           secretName: ibon-poc-secret
+          items:
+          -  key: secret.json
+             path: secret.json

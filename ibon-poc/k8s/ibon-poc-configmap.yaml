@@ -4,8 +4,9 @@ data:
     {
       "Logging": {
         "LogLevel": {
-          "Default": "Information",
-          "Microsoft": "Information",          
+          "Default": "Debug",
+          "Microsoft": "Warning",
+          "Microsoft.Hosting.Lifetime": "Information",
           "ibon_poc": "Debug"
         }
       },

@@ -21,7 +21,9 @@ namespace ibon_poc
                 .ConfigureAppConfiguration((hostingContext, config) =>
                 {
                     config.AddJsonFile(
-                        "secret.json", optional: false, reloadOnChange: true);
+                        "Secrets/secret.json", optional: true, reloadOnChange: true);
+                    config.AddJsonFile(
+                        "Configs/appsettings.json", optional: true, reloadOnChange: true);
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

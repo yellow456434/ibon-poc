@@ -18,6 +18,8 @@
     <Folder Include="Configurations\" />
     <Folder Include="QueueContract\" />
     <Folder Include="Services\" />
+    <Folder Include="Secrets\" />
+    <Folder Include="Configs\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.2" />

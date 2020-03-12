@@ -12,5 +12,8 @@ RUN dotnet publish -c Release -o out
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.1 AS runtime
 WORKDIR /ibon-poc
 COPY --from=build /ibon-poc/out ./
-RUN rm -f appsettings.* && rm -f secret.json
+#RUN rm -f Configs/appsettings.* && rm -f Secrets/secret.json
+
+EXPOSE 5000
+
 ENTRYPOINT ["dotnet", "ibon-poc.dll"]

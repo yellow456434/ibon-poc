@@ -10,7 +10,7 @@ spec:
   - name: http
     port: 801
     protocol: TCP
-    targetPort: 80
+    targetPort: 5000
   selector:
     app: ibonpoc
   type: ClusterIP
