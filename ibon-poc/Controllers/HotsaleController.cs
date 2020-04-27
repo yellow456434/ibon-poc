@@ -80,5 +80,16 @@ namespace ibon_poc.Controllers
                 DateTime = DateTime.Now
             });
         }
+
+        [HttpGet]
+        [Route("publish2")]
+        public async Task Publish2(string t)
+        {
+            await _ipublish.Publish<PriceMsg>(new
+            {
+                uuid = new Random().Next(),
+                price = t
+            });
+        }
     }
 }

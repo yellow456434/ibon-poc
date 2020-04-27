@@ -30,20 +30,22 @@ namespace Order
                 {
                     cfg.Host("rabbitmq://" + Environment.GetEnvironmentVariable("rabbitmqHost") + ":" + Configuration["rabbitmqPort"],
                         host => {
-                            host.Username("admin");
-                            host.Password("pw12345");
+                            host.Username(Configuration["rabbitmq:username"]);
+                            host.Password(Configuration["rabbitmq:password"]);
                         });
 
                     cfg.ReceiveEndpoint("queueTest", e =>
                     {
                         e.PrefetchCount = 1;
-                        e.UseMessageRetry(x => x.Interval(2, 100));
+                        e.UseMessageRetry(x => x.Intervals(TimeSpan.FromSeconds(3), TimeSpan.FromSeconds(8), TimeSpan.FromSeconds(15)));
 
                         e.ConfigureConsumer<OrderConsumer>(provider);
+                        e.ConfigureConsumer<PriceConsumer>(provider);
                     });
                 }));
 
                 x.AddConsumer<OrderConsumer>();
+                x.AddConsumer<PriceConsumer>();
             });
 
             services.AddSingleton<IHostedService, BusService>();

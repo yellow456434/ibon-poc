@@ -7,4 +7,10 @@ namespace QueueContract
         string name { get; }
         DateTime dateTime { get; }
     }
+
+    public interface PriceMsg
+    {
+        int uuid { get; }
+        string price { get; }
+    }
 }
